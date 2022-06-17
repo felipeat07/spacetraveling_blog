@@ -26,9 +26,3 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
 
 
-
-//anterior no app
-// function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-//   return <Component {...pageProps} />;
-// }
-

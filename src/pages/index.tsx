@@ -1,3 +1,4 @@
+import Prismic from '@prismicio/client';
 import { GetStaticProps } from 'next';
 
 import { getPrismicClient } from '../services/prismic';
@@ -24,13 +25,45 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-// export default function Home() {
-//   // TODO
-// }
+export default function Home({ postsPagination }: HomeProps) {
+  return (
+    <>
+      
+      <header className={styles.headerContainer}>
+        <div className={styles.headerContent}>
+          <img src="/images/Logo.svg" alt="logo" />
+        </div>
+      </header>
+    
+      
+      <body>
+        
+      </body>
+    
+    
+    </>
+  );
 
-// export const getStaticProps = async () => {
-//   // const prismic = getPrismicClient({});
-//   // const postsResponse = await prismic.getByType(TODO);
 
-//   // TODO
-// };
+
+
+}
+
+
+
+
+
+export const getStaticProps = async () => {
+  const prismic = getPrismicClient({});
+  const postsResponse = await prismic.getByType([
+    Prismic.predicate.at('document.type', 'posts')
+  ], {
+    fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
+    pageSize: 4
+  }
+  );
+
+  return {
+    props: { postsResponse }
+  }
+};
