@@ -1,6 +1,6 @@
 import Prismic from '@prismicio/client';
 import { GetStaticProps } from 'next';
-
+import { FiCalendar, FiUser } from "react-icons/fi";
 import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
@@ -36,8 +36,33 @@ export default function Home({ postsPagination }: HomeProps) {
       </header>
     
       
-      <body>
+      <body className={styles.bodyContainer}>
         
+        <div className={styles.bodyContent}>
+          <h1>Como uilizar Hooks</h1>
+          <p>Pensando em sincronização ao invés de ciclos de vida</p>
+          <h5> <FiCalendar /> 15 Mar 2021</h5>
+          <h5> <FiUser /> Joseph Oliveira</h5>
+        </div>
+
+        <div className={styles.bodyContent}>
+          <h1>Como uilizar Hooks</h1>
+          <p>Pensando em sincronização ao invés de ciclos de vida</p>
+          <h5> <FiCalendar /> 15 Mar 2021</h5>
+          <h5> <FiUser /> Joseph Oliveira</h5>
+        </div>
+
+        <div className={styles.bodyContent}>
+          <h1>Como uilizar Hooks</h1>
+          <p>Pensando em sincronização ao invés de ciclos de vida</p>
+          <h5> <FiCalendar /> 15 Mar 2021</h5>
+          <h5> <FiUser /> Joseph Oliveira</h5>
+        </div>
+
+       
+
+
+
       </body>
     
     
@@ -45,25 +70,19 @@ export default function Home({ postsPagination }: HomeProps) {
   );
 
 
-
-
 }
-
-
 
 
 
 export const getStaticProps = async () => {
   const prismic = getPrismicClient({});
-  const postsResponse = await prismic.getByType([
-    Prismic.predicate.at('document.type', 'posts')
-  ], {
-    fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
-    pageSize: 4
-  }
-  );
+
+  const posts = await prismic.getByType('posts', {
+    lang: 'pt-BR',
+    pageSize: 4,
+  });
 
   return {
-    props: { postsResponse }
+    props: { posts }
   }
 };
