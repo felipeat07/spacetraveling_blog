@@ -1,9 +1,6 @@
-import Prismic from '@prismicio/client';
-import { GetStaticProps } from 'next';
 import { FiCalendar, FiUser } from "react-icons/fi";
+import Header from "../components/Header";
 import { getPrismicClient } from '../services/prismic';
-
-import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
 
 interface Post {
@@ -28,44 +25,34 @@ interface HomeProps {
 export default function Home({ postsPagination }: HomeProps) {
   return (
     <>
-      
-      <header className={styles.headerContainer}>
-        <div className={styles.headerContent}>
-          <img src="/images/Logo.svg" alt="logo" />
-        </div>
-      </header>
-    
-      
+
+      <Header />
+
+
       <body className={styles.bodyContainer}>
-        
-        <div className={styles.bodyContent}>
-          <h1>Como uilizar Hooks</h1>
-          <p>Pensando em sincronização ao invés de ciclos de vida</p>
-          <h5> <FiCalendar /> 15 Mar 2021</h5>
-          <h5> <FiUser /> Joseph Oliveira</h5>
-        </div>
 
         <div className={styles.bodyContent}>
-          <h1>Como uilizar Hooks</h1>
-          <p>Pensando em sincronização ao invés de ciclos de vida</p>
-          <h5> <FiCalendar /> 15 Mar 2021</h5>
-          <h5> <FiUser /> Joseph Oliveira</h5>
+
+          {postsPagination.results.map(post => (
+            <>
+              <h1>{post.data.title}</h1>
+              <p>{post.data.subtitle}</p>
+              <h5> <FiCalendar /> {post.first_publication_date}</h5>
+              <h5> <FiUser /> {post.data.author}</h5>
+            </>
+
+        ))
+          }
+
         </div>
 
-        <div className={styles.bodyContent}>
-          <h1>Como uilizar Hooks</h1>
-          <p>Pensando em sincronização ao invés de ciclos de vida</p>
-          <h5> <FiCalendar /> 15 Mar 2021</h5>
-          <h5> <FiUser /> Joseph Oliveira</h5>
-        </div>
-
-       
-
-
+          <button type="button"
+                  className={styles.button}
+          >
+            Carregar mais posts
+          </button>
 
       </body>
-    
-    
     </>
   );
 
@@ -73,16 +60,15 @@ export default function Home({ postsPagination }: HomeProps) {
 }
 
 
-
 export const getStaticProps = async () => {
   const prismic = getPrismicClient({});
 
-  const posts = await prismic.getByType('posts', {
+  const postsPagination = await prismic.getByType('posts', {
     lang: 'pt-BR',
     pageSize: 4,
   });
-
+  
   return {
-    props: { posts }
+    props: { postsPagination }
   }
 };
