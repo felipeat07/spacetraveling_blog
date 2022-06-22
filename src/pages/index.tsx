@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FiCalendar, FiUser } from "react-icons/fi";
 import Header from "../components/Header";
 import { getPrismicClient } from '../services/prismic';
@@ -23,6 +24,18 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
+
+const [pagination, setPagination] = useState<PostPagination>();
+
+useEffect(()=>{
+  fetch(postsPagination.next_page)
+  .then(response => response.json())
+  .then(data => setPagination(data))
+}, [])
+
+  console.log(pagination)
+
+
   return (
     <>
 
@@ -53,6 +66,7 @@ export default function Home({ postsPagination }: HomeProps) {
           </button>
 
       </body>
+
     </>
   );
 
@@ -65,10 +79,16 @@ export const getStaticProps = async () => {
 
   const postsPagination = await prismic.getByType('posts', {
     lang: 'pt-BR',
-    pageSize: 4,
+    pageSize: 1,
   });
-  
+  // console.log(JSON.stringify(postsPagination, null, 2))
   return {
     props: { postsPagination }
   }
 };
+
+
+
+
+
+

@@ -8,20 +8,13 @@
     margin: 0 auto;
     padding: 0 2rem;
 
-    display: block;
-    align-items: center;
-
-    h1 {
-        font: 700 "Inter", sans-serif ;
-    }
     p {
-        font: 400 "Inter", sans-serif;
         margin-top: 0;
     }
 
     h5 {
         display: inline;
-        font: 600 "Inter", sans-serif;
+        font: 600;
         
         & + h5 {
             padding: 0 2rem;
@@ -31,15 +24,13 @@
 
 .button {
     color: #FF57B2;
-    font: 700 "Inter", sans-serif ;
+    font: 700;
     font-size: 1.25rem;
-    font-weight: bold;
     height: 0;
     background: transparent;
-    margin: 1.5rem 0 0 10rem;
+    margin-top: 2rem;
+    margin-left: 8rem;
     border: 0;
-
-    display: flex;
 
     cursor: pointer;
 
