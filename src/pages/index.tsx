@@ -25,15 +25,21 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps) {
 
-const [pagination, setPagination] = useState<PostPagination>();
+  // const [pagination, setPagination] = useState<PostPagination>();
+  const [posts, setPosts] = useState(postsPagination.results)
 
-useEffect(()=>{
-  fetch(postsPagination.next_page)
-  .then(response => response.json())
-  .then(data => setPagination(data))
-}, [])
 
-  console.log(pagination)
+  // useEffect(() => {
+  //   fetch(postsPagination.next_page)
+  //     .then(response => response.json())
+  //     .then(data => setPagination(data))
+  // }, [])
+
+  function hundleLoadPosts(){
+    setPosts({...posts, })
+  }
+
+  // console.log(pagination)
 
 
   return (
@@ -46,7 +52,8 @@ useEffect(()=>{
 
         <div className={styles.bodyContent}>
 
-          {postsPagination.results.map(post => (
+
+          {posts.map(post => (
             <>
               <h1>{post.data.title}</h1>
               <p>{post.data.subtitle}</p>
@@ -54,16 +61,17 @@ useEffect(()=>{
               <h5> <FiUser /> {post.data.author}</h5>
             </>
 
-        ))
+          ))
           }
 
         </div>
 
-          <button type="button"
-                  className={styles.button}
-          >
-            Carregar mais posts
-          </button>
+        <button type="button"
+          className={styles.button}
+
+        >
+          Carregar mais posts
+        </button>
 
       </body>
 
