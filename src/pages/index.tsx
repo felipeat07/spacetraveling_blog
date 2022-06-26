@@ -25,22 +25,19 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps) {
 
-  // const [pagination, setPagination] = useState<PostPagination>();
-  const [posts, setPosts] = useState(postsPagination.results)
+  const [pagination, setPagination] = useState<PostPagination>();
+  const [loadPosts, setLoadPosts] = useState<boolean>(false)
 
 
-  // useEffect(() => {
-  //   fetch(postsPagination.next_page)
-  //     .then(response => response.json())
-  //     .then(data => setPagination(data))
-  // }, [])
+  useEffect(() => {
+    fetch(postsPagination.next_page)
+      .then(response => response.json())
+      .then(data => setPagination(data))
+  }, [])
 
-  function hundleLoadPosts(){
-    setPosts({...posts, })
+  function hundleLoadMorePosts(){
+     setLoadPosts(true)
   }
-
-  // console.log(pagination)
-
 
   return (
     <>
@@ -53,7 +50,7 @@ export default function Home({ postsPagination }: HomeProps) {
         <div className={styles.bodyContent}>
 
 
-          {posts.map(post => (
+          {postsPagination.results.map(post => (
             <>
               <h1>{post.data.title}</h1>
               <p>{post.data.subtitle}</p>
@@ -64,11 +61,25 @@ export default function Home({ postsPagination }: HomeProps) {
           ))
           }
 
+          {loadPosts ? 
+          
+          pagination.results.map(post => (
+            <>
+              <h1>{post.data.title}</h1>
+              <p>{post.data.subtitle}</p>
+              <h5> <FiCalendar /> {post.first_publication_date}</h5>
+              <h5> <FiUser /> {post.data.author}</h5>
+            </>
+          ))
+            : ''
+        }
+
+
         </div>
 
         <button type="button"
-          className={styles.button}
-
+          className={loadPosts ? styles.buttonHidden : styles.button}
+          onClick={hundleLoadMorePosts}
         >
           Carregar mais posts
         </button>
@@ -78,7 +89,6 @@ export default function Home({ postsPagination }: HomeProps) {
     </>
   );
 
-
 }
 
 
@@ -87,16 +97,9 @@ export const getStaticProps = async () => {
 
   const postsPagination = await prismic.getByType('posts', {
     lang: 'pt-BR',
-    pageSize: 1,
+    pageSize: 2,
   });
-  // console.log(JSON.stringify(postsPagination, null, 2))
   return {
     props: { postsPagination }
   }
 };
-
-
-
-
-
-
