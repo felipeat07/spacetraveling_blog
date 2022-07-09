@@ -36,8 +36,8 @@ export default function Home({ postsPagination }: HomeProps) {
       .then(data => setPagination(data))
   }, [])
 
-  function hundleLoadMorePosts(){
-     setLoadPosts(true)
+  function hundleLoadMorePosts() {
+    setLoadPosts(true)
   }
 
   return (
@@ -53,9 +53,9 @@ export default function Home({ postsPagination }: HomeProps) {
 
           {postsPagination.results.map(post => (
             <>
-            <Link href={`/post/${post.uid}`}>
-              <h1>{post.data.title}</h1>
-            </Link>
+              <Link href={`/post/${post.uid}`}>
+                <h1>{post.data.title}</h1>
+              </Link>
               <p>{post.data.subtitle}</p>
               <h5> <FiCalendar /> {post.first_publication_date}</h5>
               <h5> <FiUser /> {post.data.author}</h5>
@@ -63,18 +63,20 @@ export default function Home({ postsPagination }: HomeProps) {
           ))
           }
 
-          {loadPosts ? 
-          
-          pagination.results.map(post => (
-            <>
-              <h1>{post.data.title}</h1>
-              <p>{post.data.subtitle}</p>
-              <h5> <FiCalendar /> {post.first_publication_date}</h5>
-              <h5> <FiUser /> {post.data.author}</h5>
-            </>
-          ))
+          {loadPosts ?
+
+            pagination.results.map(post => (
+              <>
+                <Link href={`/post/${post.uid}`}>
+                  <h1>{post.data.title}</h1>
+                </Link>
+                <p>{post.data.subtitle}</p>
+                <h5> <FiCalendar /> {post.first_publication_date}</h5>
+                <h5> <FiUser /> {post.data.author}</h5>
+              </>
+            ))
             : ''
-        }
+          }
 
 
         </div>

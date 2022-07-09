@@ -40,7 +40,7 @@ export default function Post({ post }: PostProps) {
       <title>{post.data.title} | SpaceTraveling</title>
 
       <Header />
-      <img src={post.data.banner.url} alt="Banner" className={styles.bannerImg}  /> {/* May not work with .svg files */}
+      <img src={post.data.banner.url} alt="Banner" className={styles.bannerImg}  /> 
 
       <main className={commonStyles.container}>
         <article className={styles.post}>
