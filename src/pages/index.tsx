@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FiCalendar, FiUser } from "react-icons/fi";
 import Header from "../components/Header";
@@ -52,12 +53,13 @@ export default function Home({ postsPagination }: HomeProps) {
 
           {postsPagination.results.map(post => (
             <>
+            <Link href={`/post/${post.uid}`}>
               <h1>{post.data.title}</h1>
+            </Link>
               <p>{post.data.subtitle}</p>
               <h5> <FiCalendar /> {post.first_publication_date}</h5>
               <h5> <FiUser /> {post.data.author}</h5>
             </>
-
           ))
           }
 
